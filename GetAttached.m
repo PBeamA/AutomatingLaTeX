@@ -46,6 +46,7 @@ for i = 1 : length(EXT)
 end
 
 LOC = strfind([sprintf('\n'), FILESstring], sprintf('\n'));
+% LOC = strfind([newline, FILESstring], newline);
 
 nLOC = length(LOC);
 
@@ -81,9 +82,7 @@ end
 for i = 1 : nFILES
     %     ['USED/', FullFilename{i}]
     copyfile(FullFilename{i}, ['USED/', FullFilename{i}])
-    
-    
-    
+
 end
 
 
