@@ -8,7 +8,7 @@ clear all
 clc
 
 
-filename = 'BKMAJDFull';
+filename = 'texFilename';
 
 
 fid = fopen([filename, '.bcf'], 'rt');
@@ -32,34 +32,25 @@ while length(STRING) > 1
     STRING = regexprep(STRING, regexprep(STRING, '\n.*', ''), '');
     STRING(1) = [];
     STRING = regexprep(STRING, '\s*', '\n');
-%     STRING = regexprep(STRING, '\r\n\r\n', '\r\n')
-
-
-
-
-% STRING = regexprep(STRING, '\n(.*)', '$1');
-% asdasd
-
-%     pause
+    %     STRING = regexprep(STRING, '\r\n\r\n', '\r\n')
+    
+    % STRING = regexprep(STRING, '\n(.*)', '$1');
+    % asdasd
+    
+    %     pause
 end
 
 
 KEYS = unique(KEYS);
 
-
-if length(KEYS{1}) == 0
+% if length(KEYS{1}) == 0
+if isempty(KEYS{1})
     KEYS(1) = [];
-   KEYS;
+%     KEYS;
 end
 
 CitedKeys = KEYS;
 length(KEYS)
-
-
-
-
-
-
 
 
 
@@ -70,24 +61,16 @@ STRING = fread(fid, '*char')';
 fclose(fid);
 
 fid = fopen([filename, '_CLEAN.bib'], 'wt');
-BIBKEYS = regexprep(STRING, '@[\w]+{([^,]+),[^@]+', '$1\n');
+% BIBKEYS = regexprep(STRING, '@[\w]+{([^,]+),[^@]+', '$1\n');
 
 nCitedKeys = length(CitedKeys);
 % nCitedKeys = 1;
 for i = 1 : nCitedKeys
-    
-    
-bib = regexprep(STRING, sprintf('.*(@[\\w]+{%s,[^@]+).*', CitedKeys{i}), '$1');
-
-bib = regexprep(bib, '\\', '\\\\');
-
-bib = regexprep(bib, '%', '%%');
+    bib = regexprep(STRING, sprintf('.*(@[\\w]+{%s,[^@]+).*', CitedKeys{i}), '$1');
+    bib = regexprep(bib, '\\', '\\\\');
+    bib = regexprep(bib, '%', '%%');
     fprintf(fid, bib);
     
-%     bib
-    
-    
-%     pause
 end
 fclose(fid);
 end

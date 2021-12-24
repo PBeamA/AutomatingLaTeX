@@ -8,7 +8,7 @@ clear all
 clc
 tic
 
-filename = 'BKMGC.tex';
+filename = 'texFilename.tex';
 
 fid = fopen(filename, 'rt');
 
@@ -74,7 +74,6 @@ end
 FOLDERS = unique(regexprep(FullFilename, '/[^/]+\.[^\.]+', ''));
 
 for i = 1 : length(FOLDERS)
-    
     if ~isfolder(['USED/' FOLDERS{i}])
         mkdir(['USED/' FOLDERS{i}])
     end
