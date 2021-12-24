@@ -17,11 +17,11 @@ if ~ischar(num)
     if isempty(s)
         s = sign(num);
     end
-if round(num) - num == 0
-    str = num2str(num*s);
-else
-    str = num2str(num*s, '%.50f');
-end
+    if round(num) - num == 0
+        str = num2str(num*s);
+    else
+        str = num2str(num*s, '%.50f');
+    end
 else
     str = num;
 end
@@ -46,7 +46,7 @@ if ~contains(str, 'E', 'IgnoreCase', true)
             DEC = round(str2double(str(j + 1 : j + nRounding + 1))/10);
             str = [str(1 : j), num2str(DEC)];
         end
-
+        
         str = [numsep(str2double(str(1 : j - 1))), str(j : end)];
     end
 end
@@ -58,10 +58,6 @@ if ~ischar(num)
 end
 str = regexprep(str, ',', '{,}');
 str = regexprep(str, '{{,}}', '{,}');
-
-%         str
-
-% asdasd
 
 if nargin == 2
     if contains(str, '.')
@@ -77,11 +73,8 @@ end
 
 function str = strE(str)
 if contains(str, 'E', 'IgnoreCase', true)
-    % str
     str = regexprep(str, '[Ee]', ' \\\\times 10^{');
-    % str = regexprep(str, '\n', '}');
     str = [str, '}'];
-    % str
 end
 end
 
