@@ -1,4 +1,6 @@
-# Automating LaTeX
+# Automating `LaTeX` (with `MATLAB`)
+Using `\Sexpr{    }` in `LaTeX` from `MATLAB` output
+
 
 # Steps
 1. 
