@@ -3,16 +3,16 @@
 %
 % Beam.Aschakulporn@otago.ac.nz
 % https://pbeama.github.io/
-% Modified: Friday 24 December 2021 (19:32)
+% Modified: Thursday 3 February 2022 (09:24)
 % * Comments removed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function str = numsep(num, varargin)
 
-s = [];
 if nargin == 2
 nRounding = varargin{1};
 end
 
+s = [];
 if ~ischar(num)
 if isempty(s)
 s = sign(num);
@@ -24,6 +24,11 @@ str = num2str(num*s, '%.50f');
 end
 else
 str = num;
+
+if strcmp(str(1), '-')
+s = -1;
+str(1) = [];
+end
 end
 j = strfind(str, '.');
 
@@ -49,11 +54,11 @@ str = [numsep(str2double(str(1 : j - 1))), str(j : end)];
 end
 end
 str = strE(str);
-if ~ischar(num)
+
 if s == -1
 str = ['-', str];
 end
-end
+
 str = regexprep(str, ',', '{,}');
 str = regexprep(str, '{{,}}', '{,}');
 
