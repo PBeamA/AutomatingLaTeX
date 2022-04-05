@@ -3,18 +3,25 @@
 %
 % Beam.Aschakulporn@otago.ac.nz
 % https://pbeama.github.io/
-% Modified: Friday 24 December 2021 (19:01)
+% Modified: Wednesday 6 April 2022 (09:24)
 % * Comments removed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function FillLaTeX
-close all
-clear all
-clc
+function FillLaTeX(varargin)
 
-src = 'texFilename.tex'
-dst = regexprep(src, '.tex', 'Filled.tex')
-DataFilename = 'MATLAB\EssayIIDATA.txt'
+src = 'texFilename.tex';
+DataFilename = 'MATLAB\DATA.txt';
+if nargin ~= 0
+src = varargin{1};
+if ~contains(src, '.tex')
+src = [src, '.tex'];
+end
+if nargin == 2
+DataFilename = varargin{2};
+end
+end
+
+dst = regexprep(src, '.tex', 'Filled.tex');
 
 if isfile(regexprep(src, '.tex', '.bib'))
 copyfile(regexprep(src, '.tex', '.bib'), regexprep(src, '.tex', 'Filled.bib'))
