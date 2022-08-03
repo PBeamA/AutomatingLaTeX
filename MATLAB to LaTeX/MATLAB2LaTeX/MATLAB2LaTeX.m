@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Beam.Aschakulporn@otago.ac.nz
+% Pakorn.Aschakulporn@otago.ac.nz
 % https://pbeama.github.io/
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function MATLAB2LaTeX(filename)

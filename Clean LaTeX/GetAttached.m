@@ -1,9 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % GetAttached.m
 %
-% Beam.Aschakulporn@otago.ac.nz
+% Pakorn.Aschakulporn@otago.ac.nz
 % https://pbeama.github.io/
-% Modified: Wednesday 6 April 2022 (09:24)
+% Modified: Tuesday 12 July 2022 (12:07)
 % * Comments removed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function GetAttached(varargin)
@@ -24,6 +24,9 @@ fid = fopen(filename, 'rt');
 STRING = fread(fid, '*char')';
 
 fclose(fid);
+
+STRING = regexprep(STRING, '\r', '');
+STRING = regexprep(STRING, '(\n+[\s]*%[^\n]*)+', '');
 
 EXT = {'.pdf', '.eps', '.png', '.jpg'};
 
