@@ -3,7 +3,7 @@
 %
 % Pakorn.Aschakulporn@otago.ac.nz
 % https://pbeama.github.io/
-% Modified: Tuesday 12 July 2022 (12:08)
+% Modified: Wednesday 11 October 2023 (10:52)
 % * Comments removed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function RemoveEquations(varargin)
@@ -12,11 +12,32 @@ if nargin == 1
 filename = varargin{1};
 else
 tic
-filename = 'texFilename';
+
+D = dir;
+D([D.isdir]) = [];
+D(~contains({D.name}, '.tex')) = [];
+
+D(contains({D.name}, 'References')) = [];
+D(contains({D.name}, '_Mathless')) = [];
+
+nD = length(D);
+if nD > 1
+for i = 1 : nD
+filename = D(i).name;
+RemoveEquations(filename);
+end
+return
+else
+filename = D.name;
+end
 end
 
 if ~contains(filename, '.tex')
 filename = [filename, '.tex'];
+end
+
+if isfile(regexprep(filename, '\.tex', '\.bib')) 
+copyfile(regexprep(filename, '\.tex', '\.bib'), regexprep(filename, '\.tex', '_Mathless\.bib'))
 end
 
 fid = fopen(filename, 'rt');
