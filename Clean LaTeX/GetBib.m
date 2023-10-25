@@ -1,9 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % GetBib.m
 %
-% Beam.Aschakulporn@otago.ac.nz
+% Pakorn.Aschakulporn@otago.ac.nz
 % https://pbeama.github.io/
-% Modified: Wednesday 6 April 2022 (09:24)
+% Modified: Wednesday 25 October 2023 (17:09)
 % * Comments removed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function GetBib(varargin)
@@ -12,6 +12,31 @@ if nargin == 1
 filename = varargin{1};
 else
 filename = 'texFilename';
+
+D = dir;
+D([D.isdir]) = [];
+AllNames = {D.name}';
+D(~contains({D.name}, '.bib')) = [];
+
+FILENAMES = {D.name}';
+
+nFILENAMES = length(FILENAMES);
+for ithFile = nFILENAMES : -1 : 1
+if sum(contains(AllNames, regexprep(FILENAMES{ithFile}, '\.bib', '.tex')) + contains(AllNames, regexprep(FILENAMES{ithFile}, '\.bib', '.bcf'))) == 0
+fprintf('Not enough files to clean: %s\n', FILENAMES{ithFile})
+
+FILENAMES(ithFile) = [];
+end
+end
+FILENAMES;
+
+FILENAMES = regexprep(FILENAMES, '\.bib', '');
+
+nFILENAMES = length(FILENAMES);
+for ithFile = 1 : nFILENAMES
+GetBib(FILENAMES{ithFile})
+end
+return
 end
 
 filename = regexprep(filename, '\..*', '');
@@ -22,7 +47,7 @@ STRING = fread(fid, '*char')';
 
 fclose(fid);
 
-STRING = regexprep(STRING, '.*(<bcf:citekey order="1">)', '$1');
+STRING = regexprep(STRING, '.*(<bcf:citekey order="1"[^>]*>)', '$1');
 STRING = regexprep(STRING, '</bcf:section>.*', '');
 STRING = regexprep(STRING, '[ ]*', '');
 STRING = regexprep(STRING, '<[^<^>]*>', '');
@@ -43,7 +68,7 @@ KEYS(1) = [];
 end
 
 CitedKeys = KEYS;
-length(KEYS)
+fprintf('Number of Citations: %g\n', length(KEYS))
 
 fid = fopen([filename, '.bib'], 'rt');
 
@@ -63,4 +88,3 @@ fprintf(fid, bib);
 end
 fclose(fid);
 end
-
